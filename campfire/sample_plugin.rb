@@ -21,8 +21,8 @@ class SamplePlugin < Campfire::PollingBot::Plugin
   #  - :disallow_guests_message - sent when guest access is turned off
   #  - :topic_change_message - sent when the room's topic is changed
 
-  accept :text_message, :addressed_to_me => true
-  accept :paste_message
+  accepts :text_message, :addressed_to_me => true
+  accepts :paste_message
   
   # priority is used to determine the plugin's order in the plugin queue. A higher number represents
   # a higher priority. There are no upper or lower bounds. If you don't specify a priority, it defaults

@@ -8,13 +8,14 @@ gem "dm-sqlite-adapter"
 gem "dm-migrations"
 gem "data_objects"
 gem "do_sqlite3"
-gem "chronic"
-gem "json"
+gem "json", "1.5.3"
 gem "daemons"
 gem "i18n"
-gem "httparty"
-gem "google-search"
 gem "firering", "~>1.0.8", :git => "git://github.com/indirect/firering.git"
+
+# load plugin gemspecs
+gemspecs = Dir.glob(File.dirname(__FILE__) + "/campfire/polling_bot/plugins/*/*.gemspec")
+gemspecs.each {|g| gemspec :path => File.dirname(g)}
 
 group :test do
   gem "rspec", ">= 2.0.0.beta.8"

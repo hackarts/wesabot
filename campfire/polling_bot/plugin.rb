@@ -72,11 +72,13 @@ module Campfire
       end
 
       def self.load_plugin_classes
+        # load core first
+        paths  = Dir.glob(File.dirname(__FILE__) + "/plugins/shared/*.rb")
         # load all models & plugins
-        paths  = Dir.glob(File.dirname(__FILE__) + "/plugins/models/*.rb")
-        paths += Dir.glob(File.dirname(__FILE__) + "/plugins/*.rb")
+        paths += Dir.glob(File.dirname(__FILE__) + "/plugins/*/*.rb")
         paths.each do |path|
           begin
+            $stderr.puts "Loading: #{path}"
             path.match(/(.*?)\.rb$/) && (require $1)
           rescue Exception => e
             $stderr.puts "Unable to load #{path}: #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"

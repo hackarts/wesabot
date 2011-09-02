@@ -47,6 +47,7 @@ class DeployPlugin < Campfire::PollingBot::Plugin
 
     when /on deck(?: for ([^\s\?]+)( staging)?)?/
       project, staging = $1, $2
+      project ||= default_project
       name = staging ? "#{project} staging" : project
 
       if not projects.any?
@@ -54,7 +55,6 @@ class DeployPlugin < Campfire::PollingBot::Plugin
         return HALT
       end
 
-      project ||= default_project
       if project.nil?
         bot.say("Sorry #{message.person}, I don't have a default project. Here are the projects I do know about:")
         bot.paste(projects.keys.sort.join("\n"))
@@ -72,7 +72,6 @@ class DeployPlugin < Campfire::PollingBot::Plugin
       range = nil
       begin
         range = "#{deployed_revision(project, staging)}..HEAD"
-        logger.debug "asking for shortlog in range #{range}"
         shortlog = project_shortlog(project, range)
       rescue => e
         bot.log_error(e)

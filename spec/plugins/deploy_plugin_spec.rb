@@ -3,7 +3,7 @@ require 'spec_helper'
 describe DeployPlugin do
   def use_example_config
     @plugin.config = {
-      'project' => {
+      'projects' => {
         'my_super_site' => {
           'deployed_revision_url' => 'http://www.example.com/REVISION'
         },
@@ -69,6 +69,7 @@ describe DeployPlugin do
 
       context "with no default project" do
         before do
+          allow_message_expectations_on_nil
           @project.stub!(:default_project).and_return(nil)
         end
 
@@ -144,8 +145,7 @@ EOS
 
         it "reports the error to the user" do
           asking("wes, what's on deck for my_super_site?").
-            should make_wes_say("Sorry John, I couldn't get what's on deck for my_super_site, got a RuntimeError:").
-                  and_paste( %r{testing} )
+            should make_wes_say("Sorry John, I couldn't get what's on deck for my_super_site.")
         end
       end
     end

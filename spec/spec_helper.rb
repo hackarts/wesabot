@@ -56,7 +56,8 @@ Rspec.configure do |config|
     bot = FakeBot.new
     @plugin.class.bot = bot
     message = type.new(params)
-    message.user = User.new(:name => "John Tester")
+    @user ||= User.create(:name => "John Tester")
+    message.user = @user
     @plugin.process(message) if @plugin.accepts?(message)
     return bot.transcript
   end

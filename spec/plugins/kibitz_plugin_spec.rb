@@ -15,7 +15,7 @@ describe KibitzPlugin do
   describe "when addressing wes" do
     it "responds with the name of the sender when the message has no command" do
       saying("wes?").
-        should make_wes_say("John")
+        should make_wes_say("John?")
     end
 
     it "says whatever the sender tells wes to when using the 'say' command" do

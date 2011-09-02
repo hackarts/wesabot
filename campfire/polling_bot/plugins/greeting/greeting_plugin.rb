@@ -20,7 +20,7 @@ class GreetingPlugin < Campfire::PollingBot::Plugin
         wants_greeting(user, false)
         bot.say("OK, I've disabled greetings for you, #{message.person}")
         return HALT
-      when /(enable|turn on) greetings/i
+      when /(enable|turn on) greetings/i        
         wants_greeting(user, true)
         bot.say("OK, I've enabled greetings for you, #{message.person}")
         return HALT
@@ -36,6 +36,8 @@ class GreetingPlugin < Campfire::PollingBot::Plugin
           bot.say("Hmm...couldn't find when you last logged out, #{message.person}")
         end
         return HALT
+      else
+        puts "*** wtf? didn't match. command was: #{message.command}"
       end
     end
   end

@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe GreetingPlugin do
   before do
-    @plugin = described_class.new
     GreetingSetting.all.destroy
+    User.all.destroy
+    @plugin = described_class.new
+    @plugin.stub!(:catch_up_link).and_return("http://example.com")
   end
 
   it 'greets users as they enter the room by default' do

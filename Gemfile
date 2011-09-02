@@ -18,7 +18,7 @@ gemspecs = Dir.glob(File.dirname(__FILE__) + "/campfire/polling_bot/plugins/*/*.
 gemspecs.each {|g| gemspec :path => File.dirname(g)}
 
 group :test do
-  gem "rspec", ">= 2.0.0.beta.8"
-  gem "rake" # needed for Rspec::Core::RakeTask
+  gem "rspec", "~> 2.6.0"
+  gem "rake" # needed for RSpec::Core::RakeTask
   gem "ruby-debug"
 end

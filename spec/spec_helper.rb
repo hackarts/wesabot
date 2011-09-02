@@ -32,7 +32,7 @@ class FakeBot < Campfire::PollingBot
   end
 end
 
-Rspec.configure do |config|
+RSpec.configure do |config|
   def saying(what)
     message Campfire::TextMessage, :body => what
   end

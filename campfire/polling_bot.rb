@@ -111,7 +111,7 @@ module Campfire
     # determine if a message is addressed to the bot. if so, store the command in the message
     def addressed_to_me?(message)
       m = message.body.match(/^#{name}(?:[,:]\s*|\s+)(.*)/i)
-      m ||= message.body.match(/^\s*(.*?)(?:,\s+)?#{name}[.!?\s]*$/i)
+      m ||= message.body.match(/^\s*(.*?)(?:,\s+)?\b#{name}[.!?\s]*$/i)
       message.command = m[1] if m
     end
 

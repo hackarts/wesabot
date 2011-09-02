@@ -8,10 +8,10 @@ module Campfire
     attr_accessor :message_id, :timestamp, :user, :person, :person_full_name, :body, :type
 
     def initialize(params)
-      self.message_id = params.id
-      self.timestamp = params.created_at || Time.now
-      self.body = params.body
-      self.type = params.type.gsub(/(.*?)Message$/, '\1') if params.type
+      self.message_id = params[:id]
+      self.timestamp = params[:created_at] || Time.now
+      self.body = params[:body]
+      self.type = params[:type].gsub(/(.*?)Message$/, '\1') if params[:type]
     end
 
     def person_full_name=(name)

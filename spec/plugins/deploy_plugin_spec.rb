@@ -39,7 +39,7 @@ describe DeployPlugin do
     end
 
     it "omits the short form of the 'on deck' command from the help" do
-      @plugin.help.should have(1).item
+      @plugin.help.should have(2).items
     end
   end
 

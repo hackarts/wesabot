@@ -126,7 +126,9 @@ class GreetingPlugin < Campfire::PollingBot::Plugin
       memo.merge(u => u.wants_greeting?)
     end
 
-    user.wants_greeting = true if @wants_greeting_cache[user].nil?
+    if @wants_greeting_cache[user].nil?
+      @wants_greeting_cache[user] = user.wants_greeting = true
+    end
 
     return @wants_greeting_cache[user]
   end

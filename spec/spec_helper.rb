@@ -55,7 +55,8 @@ Rspec.configure do |config|
   def message(type, params={})
     bot = FakeBot.new
     @plugin.class.bot = bot
-    message = type.new(params.merge(:user => {:name => "John Tester"}))
+    message = type.new(params)
+    message.user = User.new(:name => "John Tester")
     @plugin.process(message) if @plugin.accepts?(message)
     return bot.transcript
   end

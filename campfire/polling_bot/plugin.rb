@@ -78,7 +78,6 @@ module Campfire
         paths += Dir.glob(File.dirname(__FILE__) + "/plugins/*/*.rb")
         paths.each do |path|
           begin
-            $stderr.puts "Loading: #{path}"
             path.match(/(.*?)\.rb$/) && (require $1)
           rescue Exception => e
             $stderr.puts "Unable to load #{path}: #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"

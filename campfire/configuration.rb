@@ -14,16 +14,18 @@ module Campfire
       data = data.inject({}) {|h,(k,v)| h[k.to_sym] = v; h }
       self.api_token = data[:api_token]
       self.subdomain = data[:subdomain]
-      self.room      = data[:room]
-      self.verbose   = data[:verbose] || false
-      self.datauri   = data[:datauri]
-      self.logger    = data[:logger] || data[:logfile] || Logger.new(STDOUT)
+      self.room = data[:room]
+      self.verbose = data[:verbose] || false
+      self.datauri = data[:datauri]
+      self.logger = data[:logger] || data[:logfile] || Logger.new(STDOUT)
       self.google_api_key = data[:google_api_key]
+      self.ssl_verify = data[:ssl_verify] != false
     end
 
     public
 
-    attr_accessor :api_token, :subdomain, :room, :verbose, :datauri, :logger, :google_api_key
+    attr_accessor :api_token, :subdomain, :room, :verbose, :datauri, :logger, 
+                  :google_api_key, :ssl_verify
 
     alias_method :verbose?, :verbose
 

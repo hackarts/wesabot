@@ -68,6 +68,10 @@ optparse = OptionParser.new do |opts|
     config.logger = Logger.new(path)
   end
 
+  opts.on("-k", "--ssl-no-verify", "Don't verify SSL certs") do
+    config.ssl_verify = false
+  end
+
   opts.on("-v", "--verbose", "Be verbose") do
     config.verbose = true
   end

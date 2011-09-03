@@ -6,7 +6,7 @@ module Campfire
 
     def initialize(config)
       self.config = config
-      options = {:token => config.api_token}
+      options = {:token => config.api_token, :ssl_verify => config.ssl_verify }
       self.campfire = Tinder::Campfire.new(config.subdomain, options)
       begin
         self.name = campfire.me['name']

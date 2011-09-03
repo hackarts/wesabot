@@ -17,7 +17,7 @@ module Campfire
             gsub(/([[:lower:]\d])([[:upper:]])/,'\1_\2').
             tr("-", "_").
             downcase
-        filepath = File.dirname(__FILE__) + "/plugins/config/#{name}.yml"
+        filepath = File.join(self.class.directory, "#{name}.yml")
         if File.exists?(filepath)
           self.config = YAML.load_file(filepath)
         else
@@ -27,6 +27,9 @@ module Campfire
 
       # keep track of subclasses
       def self.inherited(klass)
+        # save the plugin's directory
+        filepath = caller[0].split(':')[0]
+        klass.directory = File.dirname(caller[0].split(':')[0])
         super if defined? super
       ensure
         ( @subclasses ||= [] ).push(klass).uniq!
@@ -37,6 +40,14 @@ module Campfire
         @subclasses.inject( [] ) do |list, subclass|
           list.push(subclass, *subclass.subclasses)
         end
+      end
+
+      def self.directory=(dir)
+        @directory = dir
+      end
+
+      def self.directory
+        @directory
       end
 
       # bot accessor

@@ -34,7 +34,7 @@ class KibitzPlugin < Campfire::PollingBot::Plugin
       ]
     when /thanks|thank you/i
       bot.say_random ["No problem.", "np", "any time", "that's what I'm here for", "You're welcome."]
-    when /^(good\s?night|g'?night)$/i
+    when /^(good\s?night|(?:g')?night)$/i
       bot.say_random [
         "see you later, #{person}",
         "later, #{person}",

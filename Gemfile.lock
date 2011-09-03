@@ -1,7 +1,6 @@
 GIT
   remote: git://github.com/collectiveidea/tinder.git
-  revision: ffaabb43a82dc8ea46e82bd098cad4f5fdc43a80
-  tag: v1.6.0
+  revision: 812534fdb08dbbb068eb2d856f8e60bcf5fe8a47
   specs:
     tinder (1.6.0)
       activesupport (>= 2.3, < 4)

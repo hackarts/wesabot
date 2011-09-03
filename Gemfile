@@ -2,7 +2,7 @@ source :gemcutter
 
 gem "capistrano"
 gem "railsless-deploy", :require => nil
-gem "tinder"
+gem "tinder", :git => "git://github.com/collectiveidea/tinder.git", :tag => "v1.6.0"
 gem "dm-core"
 gem "dm-sqlite-adapter"
 gem "dm-migrations"

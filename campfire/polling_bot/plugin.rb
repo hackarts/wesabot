@@ -83,6 +83,8 @@ module Campfire
       end
 
       def self.load_plugin_classes
+        # add each plugin dir to the load path
+        Dir.glob(File.dirname(__FILE__) + "/plugins/*").each {|dir| $LOAD_PATH << dir }
         # load core first
         paths  = Dir.glob(File.dirname(__FILE__) + "/plugins/shared/*.rb")
         # load all models & plugins
@@ -100,6 +102,8 @@ module Campfire
       def self.setup_database(datauri)
         DataMapper.setup(:default, datauri)
         DataMapper.auto_upgrade!
+        # not related to setting up the database, but for lack of a better place....
+        DataMapper::Model.raise_on_save_failure = true
       end
 
       # method to set or get the priority. Higher value == higher priority. Default is 0

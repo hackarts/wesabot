@@ -54,4 +54,10 @@ class AirbrakePlugin < Campfire::PollingBot::Plugin
     bot.say(msg)
     errors.first(5).each { |e| bot.say("#{e.summary} (#{@api.error_url(e)})") }
   end
+
+    # return array of available commands and descriptions
+  def help
+    [["resolve <error number>", "mark an error as resolved"],
+     ["unresolve <error number>", "mark an error as unresolved"]]
+  end
 end

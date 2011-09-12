@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'pathname'
-require 'openssl'
 
 # get the real path of this file so we can load the library
 file = Pathname.new(__FILE__).realpath
@@ -14,27 +13,24 @@ oldpwd = Dir.pwd
 Dir.chdir(File.expand_path('../..', file))
 
 # load dependencies
+$:.push File.expand_path("../../lib", file)
 require 'rubygems'
-require 'bundler/setup'
-
-# load the library
-require 'campfire/configuration'
-require 'campfire/polling_bot'
-
-# get configuration from ARGV
+require 'wesabot'
 require 'optparse'
+require 'openssl'
 
 config = Campfire::Configuration.new
 daemonize = false
 pidfile = nil
 
+# get configuration from ARGV
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename($0)} [options]"
 
   opts.separator ""
   opts.separator "Options:"
 
-  opts.on("-c", "--config FILE", "Configuration file (required)") do |path|
+  opts.on("-c", "--config FILE", "Configuration file") do |path|
     config = Campfire::FileConfiguration.new(File.expand_path(path, oldpwd))
   end
 
@@ -53,7 +49,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on("--database PATH", "The sqlite3 database to use (required)") do |path|
-    config.datauri = "sqlite3://#{Pathname(File.expand_path(path, oldpwd)).realpath}"
+    config.datauri = "sqlite3://#{Pathname(File.expand_path(path, oldpwd)).expand_path}"
   end
 
   opts.on("-D", "--daemonize", "Daemonize the bot (run in the background)") do
@@ -74,6 +70,11 @@ optparse = OptionParser.new do |opts|
 
   opts.on("-v", "--verbose", "Be verbose") do
     config.verbose = true
+  end
+
+  opts.on("--version", "Print version") do
+    puts Campfire::VERSION
+    exit
   end
 
   opts.on_tail("-h", "--help", "Show this message") do

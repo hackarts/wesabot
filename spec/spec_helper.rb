@@ -2,8 +2,8 @@ require 'rubygems'
 require 'bundler'
 Bundler.setup
 
-require File.expand_path('../../campfire/polling_bot', __FILE__)
-require File.expand_path('../../campfire/configuration', __FILE__)
+$:.push File.expand_path("../lib", __FILE__)
+require 'wesabot'
 require 'rspec'
 
 Campfire::PollingBot::Plugin.load_plugin_classes

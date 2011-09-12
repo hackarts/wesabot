@@ -1,5 +1,5 @@
-config/*.yml
-config/deploy.rb
-src/*
 .bundle
-db/*
+*.gem
+Gemfile.lock
+pkg/*
+config/*.yml

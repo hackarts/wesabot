@@ -2,3 +2,4 @@ api_token: ecca8793813bd3e5720d9d562285db
 subdomain: example
 room: Development
 datauri: sqlite3:///path/to/database
+config_dir: /etc/wesabot

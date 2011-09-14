@@ -20,12 +20,13 @@ module Campfire
       self.logger = data[:logger] || data[:logfile] || Logger.new(STDOUT)
       self.google_api_key = data[:google_api_key]
       self.ssl_verify = data[:ssl_verify] != false
+      self.config_dir = data[:config_dir]
     end
 
     public
 
     attr_accessor :api_token, :subdomain, :room, :verbose, :datauri, :logger, 
-                  :google_api_key, :ssl_verify
+                  :google_api_key, :ssl_verify, :config_dir
 
     alias_method :verbose?, :verbose
 

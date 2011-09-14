@@ -17,7 +17,8 @@ module Campfire
             gsub(/([[:lower:]\d])([[:upper:]])/,'\1_\2').
             tr("-", "_").
             downcase
-        filepath = File.join(self.class.directory, "#{name}.yml")
+        config_dir = bot.config.config_dir || self.class.directory
+        filepath = File.join(config_dir, "#{name}.yml")
         if File.exists?(filepath)
           self.config = YAML.load_file(filepath)
         else

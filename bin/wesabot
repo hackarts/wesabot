@@ -23,6 +23,16 @@ config = Campfire::Configuration.new
 daemonize = false
 pidfile = nil
 
+# if there's an /etc/wesabot directory, set that as the default config
+# location, and load wesabot.yml if it exists
+DEFAULT_CONFIG_DIR = "/etc/wesabot" # yeah, screw Windows
+if File.directory?(DEFAULT_CONFIG_DIR) and File.readable?(DEFAULT_CONFIG_DIR)
+  if File.readable?(wesabot_config = File.join(DEFAULT_CONFIG_DIR, "wesabot.yml"))
+    config = Campfire::FileConfiguration.new(wesabot_config)
+  end
+  config.config_dir = DEFAULT_CONFIG_DIR
+end
+
 # get configuration from ARGV
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{File.basename($0)} [options]"
@@ -30,11 +40,21 @@ optparse = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Options:"
 
+  opts.on("--config-dir DIR", "Configuration directory for wesabot and plugins") do |path|
+    if File.directory?(path) and File.readable?(path)
+      # load wesabot.yml if it exists
+      if File.readable?(wesabot_config = File.join(path, "wesabot.yml"))
+        config = Campfire::FileConfiguration.new(wesabot_config)
+      end
+      config.config_dir = path
+    else
+      optparse.warn "Configuration directory #{path} does not exist or is not readable. Ignoring."
+    end
+  end
+
   opts.on("-c", "--config FILE", "Configuration file") do |path|
     config = Campfire::FileConfiguration.new(File.expand_path(path, oldpwd))
   end
-
-  opts.separator "OR"
 
   opts.on("-t", "--token TOKEN", "API token (required)") do |api_token|
     config.api_token = api_token

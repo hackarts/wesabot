@@ -4,6 +4,7 @@ require 'airbrake/error'
 class AirbrakePlugin < Campfire::PollingBot::Plugin
   accepts :text_message, :addressed_to_me => true
   priority 10
+  requires_config
   
   def initialize
     super

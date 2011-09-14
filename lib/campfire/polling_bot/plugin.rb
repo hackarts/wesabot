@@ -79,6 +79,8 @@ module Campfire
         plugin_classes = self.subclasses.sort {|a,b| b.priority <=> a.priority }
         # initialize plugins
         plugins = plugin_classes.map { |p_class| p_class.new }
+        # remove any plugins that require a config and don't have one
+        plugins.reject! {|p| p.requires_config? and p.config.empty?}
         return plugins
       end
 
@@ -121,6 +123,18 @@ module Campfire
       # convenience method to get the priority of a plugin instance
       def priority
         self.class.priority
+      end
+
+      def self.requires_config(flag = true)
+        @requires_config = flag
+      end
+
+      def self.requires_config?
+        @requires_config
+      end
+
+      def requires_config?
+        self.class.requires_config?
       end
 
       # called from Plugin objects to indicate what kinds of messages they accept

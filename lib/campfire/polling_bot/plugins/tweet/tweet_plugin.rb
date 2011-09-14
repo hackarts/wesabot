@@ -2,6 +2,7 @@
 class TweetPlugin < Campfire::PollingBot::Plugin
   accepts :text_message, :addressed_to_me => true
   priority 20
+  requires_config
 
   def process(message)
     case message.command

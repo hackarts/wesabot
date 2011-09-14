@@ -3,7 +3,8 @@ require 'open-uri'
 # Plugin to get a list of commits that are on deck to be deployed
 class DeployPlugin < Campfire::PollingBot::Plugin
   accepts :text_message, :addressed_to_me => true
-
+  requires_config
+  
   def process(message)
     case message.command
     when /deploy\s([^\s\!]+)(?:(?: to)? (staging|nine|production))?( with migrations)?/

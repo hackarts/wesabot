@@ -17,7 +17,7 @@ module Campfire
       self.room = data[:room]
       self.verbose = data[:verbose] || false
       self.datauri = data[:datauri]
-      self.logger = data[:logger] || data[:logfile] || Logger.new(STDOUT)
+      self.logger = data[:logger] || data[:logfile] || Logger.new(STDERR)
       self.google_api_key = data[:google_api_key]
       self.ssl_verify = data[:ssl_verify] != false
       self.config_dir = data[:config_dir]

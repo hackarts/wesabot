@@ -20,6 +20,7 @@ module Campfire
         config_dir = bot.config.config_dir || self.class.directory
         filepath = File.join(config_dir, "#{name}.yml")
         if File.exists?(filepath)
+          logger.debug "loading config file: #{filepath}"
           self.config = YAML.load_file(filepath)
         else
           self.config = {}
@@ -67,6 +68,10 @@ module Campfire
         bot.logger
       end
 
+      def self.logger
+        self.bot.logger
+      end
+      
       HALT = 1 # returned by a command when command processing should halt (continues by default)
 
       def self.load_all(bot)
@@ -95,8 +100,9 @@ module Campfire
         paths.each do |path|
           begin
             path.match(/(.*?)\.rb$/) && (require $1)
+            logger.debug "loaded plugin #{$1}"
           rescue Exception => e
-            $stderr.puts "Unable to load #{path}: #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
+            logger.error "Unable to load #{path}: #{e.class}: #{e.message}\n\t#{e.backtrace.join("\n\t")}"
           end
         end
       end

@@ -12,9 +12,22 @@ module Airbrake
       api_put("/errors/#{error_id}", {}, :group => {:resolved => resolved})
     end
 
+    # Fetch errors from Airbrake.
+    # Their API returns errors in pages of 30 at a time, so keep fetching
+    # until we don't get anything.
     def errors(show_resolved=false)
-      doc = Nokogiri::XML(api_get("/errors.xml", :show_resolved => show_resolved))
-      doc.xpath("/groups/group").map {|node| Airbrake::Error.from_xml(node) }
+      options = {}
+      options[:show_resolved] = 1 if show_resolved
+      page = 1
+      errors = []
+      begin
+        options[:page] = page
+        doc = Nokogiri::XML(api_get("/errors.xml", options))
+        new_errors = doc.xpath("/groups/group").map {|node| Airbrake::Error.from_xml(node) }
+        errors += new_errors
+        page += 1
+      end while new_errors.any?
+      return errors
     end
 
     def error_url(error)

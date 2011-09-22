@@ -50,6 +50,9 @@ Gem::Specification.new do |s|
   ### development dependencies  
   s.add_development_dependency "rspec", "~> 2.6.0"
   s.add_development_dependency "rake"
-  s.add_development_dependency "ruby-debug"
+  s.add_development_dependency "ruby-debug", "~> 0.10.4"
+  # linecache 0.46 depends on rbx-require-relative, which is 1.9 only.
+  # so we have to force an earlier version than that.
+  s.add_development_dependency "linecache", "0.45"
 
 end

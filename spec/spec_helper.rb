@@ -6,8 +6,6 @@ $:.push File.expand_path("../lib", __FILE__)
 require 'wesabot'
 require 'rspec'
 
-Campfire::PollingBot::Plugin.load_plugin_classes
-
 class FakeBot < Campfire::PollingBot
   def initialize
     self.name = 'Wes'
@@ -31,6 +29,9 @@ class FakeBot < Campfire::PollingBot
     @transcript ||= []
   end
 end
+
+Campfire::PollingBot::Plugin.bot = FakeBot.new
+Campfire::PollingBot::Plugin.load_plugin_classes
 
 RSpec.configure do |config|
   def saying(what)

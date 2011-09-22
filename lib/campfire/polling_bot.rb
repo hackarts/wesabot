@@ -38,29 +38,11 @@ module Campfire
           room.stream do |data|
 
             begin
-              klass = Campfire.const_get(data.type)
-              message = klass.new(data)
-
               if data.from_user?
-                data.user do |user|
-                  dbuser = User.first(:campfire_id => user.id)
-
-                  if dbuser.nil?
-                    dbuser = User.create(
-                      :campfire_id => user.id,
-                      :name => user.name
-                    )
-                  else
-                    dbuser.update(:name => user.name)
-                  end
-
-                  message.user = dbuser
-                  process(message)
-                end
+                user_message_for(data)
               else
-                process(message)
+                message_for(data)
               end
-
             rescue => e
               log_error(e)
             end
@@ -80,6 +62,40 @@ module Campfire
         room.leave
         exit 1
       end
+    end
+
+    def message_from(data)
+      Campfire.const_get(data.type).new(data)
+    end
+
+    def message_for(data)
+      process message_from(data)
+    end
+
+    def user_message_for(data)
+      data.user do |user|
+        raise RuntimeError, "didn't get a user" unless user.id
+
+        dbuser = User.first(:campfire_id => user.id)
+
+        if dbuser.nil?
+          dbuser = User.create(
+            :campfire_id => user.id,
+            :name => user.name
+          )
+        else
+          dbuser.update(:name => user.name)
+        end
+
+        message = message_from(data)
+        message.user = dbuser
+        process message
+      end
+    rescue RuntimeError
+      # if we didn't get a user, Campfire probably threw us a 500,
+      # so we should just try to get the user info again.
+      sleep 5
+      retry
     end
 
     def process(message)

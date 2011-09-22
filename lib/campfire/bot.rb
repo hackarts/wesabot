@@ -15,7 +15,8 @@ module Campfire
       rescue Tinder::AuthenticationFailed => e
         raise # maybe do some friendlier error handling later
       end
-      room.join
+
+      join_room
       say("hey guys")
     end
 
@@ -39,6 +40,17 @@ module Campfire
       options = room.users.reject{|u| u[:name] =~ /^(#{exclude}|#{self.name})/ }
       # return the other person's first name, or nil if we didn't find one
       options.any? ? options[rand(options.size)][:name].split(' ').first : nil
+    end
+
+    # join the room with retry every 5s if Campfire throws an error
+    def join_room
+      room.join
+    rescue Faraday::Error::ParsingError
+      # Tinder raises these when the API request to join the room gets a 500
+      # error page that is HTML instead. So we just try again, because
+      # Campfire has to come back up eventually, right?
+      sleep 5
+      retry
     end
 
     def logger

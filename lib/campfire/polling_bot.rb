@@ -91,11 +91,6 @@ module Campfire
         message.user = dbuser
         process message
       end
-    rescue RuntimeError
-      # if we didn't get a user, Campfire probably threw us a 500,
-      # so we should just try to get the user info again.
-      sleep 5
-      retry
     end
 
     def process(message)

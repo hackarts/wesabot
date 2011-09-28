@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.email       = ["brad@footle.org", "andre@arko.net", "me@brian-donovan.com"]
   s.homepage    = "https://github.com/hackarts/wesabot"
   s.summary     = %q{Wesabe's Campfire bot framework}
-  s.description = %q{Wesabot is a Campfire bot framework we've been using and 
-    developing at Wesabe since not long after our inception. It started as a 
-    way to avoid parking tickets near our office ("Wes, remind me in 2 hours 
-    to move my car"), and has evolved into an essential work aid. When you 
-    enter the room, Wes greets you with a link to the point in the transcript 
-    where you last left. You can also ask him to bookmark points in the 
-    transcript, send an sms message (well, an email) to someone, or even post 
-    a tweet, among other things. His functionality is easily extendable via 
+  s.description = %q{Wesabot is a Campfire bot framework we've been using and
+    developing at Wesabe since not long after our inception. It started as a
+    way to avoid parking tickets near our office ("Wes, remind me in 2 hours
+    to move my car"), and has evolved into an essential work aid. When you
+    enter the room, Wes greets you with a link to the point in the transcript
+    where you last left. You can also ask him to bookmark points in the
+    transcript, send an sms message (well, an email) to someone, or even post
+    a tweet, among other things. His functionality is easily extendable via
     plugins.}
 
   s.rubyforge_project = "wesabot"
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "dm-sqlite-adapter", "~> 1.1"
   s.add_dependency "daemons"
   s.add_dependency "i18n"
-  s.add_dependency "firering", "~> 1.2.0"
+  s.add_dependency "firering", "~> 1.2.1"
 
   ### plugin dependencies
 
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   # remind_me
   s.add_dependency "chronic"
 
-  ### development dependencies  
+  ### development dependencies
   s.add_development_dependency "rspec", "~> 2.6.0"
   s.add_development_dependency "rake"
   s.add_development_dependency "ruby-debug", "~> 0.10.4"
